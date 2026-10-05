@@ -1,0 +1,6 @@
+{
+  "appId": "com.lugawdelights.rider",
+  "appName": "Lugaw Delights Rider",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

@@ -1,0 +1,17 @@
+node_modules/
+*.log
+.DS_Store
+Thumbs.db
+# Android build output and machine-specific settings
+**/android/app/build/
+**/android/build/
+**/android/.gradle/
+**/android/local.properties
+# Signing keys must never be uploaded
+*.jks
+*.keystore
+keystore.properties
+
+# Test app files (rebuild with npm run build:debug)
+*.apk
+*.aab
