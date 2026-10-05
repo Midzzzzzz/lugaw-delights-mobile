@@ -1,0 +1,6 @@
+{
+  "appId": "com.lugawdelights.owner",
+  "appName": "Lugaw Delights Owner",
+  "webDir": "www",
+  "android": { "allowMixedContent": false }
+}

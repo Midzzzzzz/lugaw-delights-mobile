@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Lugaw Delights Owner</string>
+    <string name="title_activity_main">Lugaw Delights Owner</string>
+    <string name="package_name">com.lugawdelights.owner</string>
+    <string name="custom_url_scheme">com.lugawdelights.owner</string>
+</resources>

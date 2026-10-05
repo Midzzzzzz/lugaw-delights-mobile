@@ -10,6 +10,8 @@ The website lives in a separate folder (`lugaw-app`) and is not changed by anyth
 |---|---|---|
 | `rider/` | Lugaw Delights Rider (`com.lugawdelights.rider`) | First test version |
 | `customer/` | Lugaw Delights (`com.lugawdelights.app`), customer ordering | First test version |
+| `seller/` | Lugaw Delights Seller (`com.lugawdelights.seller`) | First test version |
+| `owner/` | Lugaw Delights Owner (`com.lugawdelights.owner`) | First test version |
 
 ## How the rider app is made
 
@@ -21,7 +23,9 @@ The website lives in a separate folder (`lugaw-app`) and is not changed by anyth
 
 `customer/www/` is a copy of the website's customer page (`index.html`) with the same shared files; "Ride with us" opens the live rider sign-up page.
 
-When the website's pages change, copy the change into `rider/www/` and `customer/www/` too.
+`seller/www/` and `owner/www/` are copies of `seller.html` and `owner.html`. In these apps, receipts and rider agreements print through Android's print screen (`@capgo/capacitor-printer`) instead of a browser window.
+
+When the website changes, run `node sync-from-website.mjs` to copy it into all four apps, then rebuild them.
 
 ## Build a test version (Windows)
 

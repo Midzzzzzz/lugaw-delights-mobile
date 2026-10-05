@@ -53,4 +53,40 @@ console.log("Customer app page");
 let c = read("index.html");
 c = must(c, `<a href="rider.html">Ride with us</a>`, `<a href="https://lugawdelights.netlify.app/rider.html" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
 write("customer", "index.html", c);
+// Seller and owner apps: print through Android's print screen (Printer plugin) instead of a browser window
+for (const app of ["seller", "owner"]) {
+  write(app, "common.js", appCommon);
+  for (const f of ["config.js", "style.css", "logo.jpg", "icon.png", "contract.js"]) fs.copyFileSync(new URL(f, SITE), new URL(`${app}/www/${f}`, import.meta.url));
+}
+const appPrint = (name, html) => `window.Capacitor?.Plugins?.Printer?.printHtml({ name: ${name}, html: ${html} })`;
+
+console.log("Seller app page");
+let s = read("seller.html");
+s = must(s, `function printReceipt(o){
+  const w=window.open("","_blank","width=420,height=640");
+  if(!w) return false; // pop-up blocked
+  w.document.open(); w.document.write(receiptHTML(o)); w.document.close();
+  return true;
+}`, `// In the app, receipts go to Android's print screen (any printer, or Save as PDF)
+function printReceipt(o){
+  const html=receiptHTML(o).replace(/<script>[\\s\\S]*?<\\/script>/g,"");
+  const p=${appPrint("`Receipt ${o.code}`", "html")};
+  if(!p) return false;
+  p.catch(()=>{});
+  return true;
+}`, "seller.html");
+s = must(s, `<a href="owner.html">owner dashboard</a>`, `<a href="https://lugawdelights.netlify.app/owner.html" target="_blank" rel="noopener">owner dashboard</a>`, "seller.html");
+write("seller", "index.html", s);
+
+console.log("Owner app page");
+let o = read("owner.html");
+o = must(o, `  const w=window.open("","_blank");
+  if(!w){ b.textContent="Allow pop-ups to view"; return; }
+  w.document.open(); w.document.write(agreementHTML(a)); w.document.close();`,
+  `  // In the app the agreement opens in Android's print screen: preview, print or save as PDF
+  const p=${appPrint("`Rider agreement - ${a.signedName}`", "agreementHTML(a)")};
+  if(!p){ b.textContent="Printing isn't available on this phone"; return; }
+  p.catch(()=>{});`, "owner.html");
+write("owner", "index.html", o);
+
 console.log("Done. Rebuild the apps to include these changes.");

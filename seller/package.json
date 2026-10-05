@@ -1,0 +1,19 @@
+{
+  "name": "lugaw-delights-seller",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Lugaw Delights Seller app for Android (Capacitor). Uses the same Firebase project as the website.",
+  "scripts": {
+    "sync": "cap sync android",
+    "build:debug": "cap sync android && cd android && gradlew.bat assembleDebug"
+  },
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/core": "^8.5.2",
+    "@capgo/capacitor-printer": "^8.1.4"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/cli": "^8.5.2"
+  }
+}
