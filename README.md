@@ -38,3 +38,11 @@ npm run build:debug
 ```
 
 The test app is written to `rider/android/app/build/outputs/apk/debug/app-debug.apk`.
+
+## Rider app download on the website
+
+The rider sign-up page offers the Rider app as a download from `lugaw-app/public/apps/LugawDelightsRider.apk`. After rebuilding the rider app, copy the new file there and upload the website:
+
+```
+copy riderndroidppuild\outputspk\debugpp-debug.apk ..\lugaw-app\publicpps\LugawDelightsRider.apk
+```
