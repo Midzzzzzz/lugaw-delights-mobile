@@ -51,7 +51,7 @@ write("rider", "index.html", r);
 
 console.log("Customer app page");
 let c = read("index.html");
-c = must(c, `<a href="rider.html">Ride with us</a>`, `<a href="https://lugawdelights.netlify.app/rider.html" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
+c = must(c, `<a href="rider.html#register">Ride with us</a>`, `<a href="https://lugawdelights.netlify.app/rider.html#register" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
 write("customer", "index.html", c);
 // Seller and owner apps: print through Android's print screen (Printer plugin) instead of a browser window
 for (const app of ["seller", "owner"]) {
