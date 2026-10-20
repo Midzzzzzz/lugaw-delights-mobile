@@ -23,7 +23,7 @@ The website lives in a separate folder (`lugaw-app`) and is not changed by anyth
 
 `customer/www/` is a copy of the website's customer page (`index.html`) with the same shared files; "Ride with us" opens the live rider sign-up page.
 
-`seller/www/` and `owner/www/` are copies of `seller.html` and `owner.html`. In these apps, receipts and rider agreements print through Android's print screen (`@capgo/capacitor-printer`) instead of a browser window.
+`seller/www/` and `owner/www/` are copies of `seller.html` and `owner.html`. The seller app also carries `kitchen.html` for kitchen staff (separate login); a phone that opened it goes straight to it next time. In these apps, receipts and rider agreements print through Android's print screen (`@capgo/capacitor-printer`) instead of a browser window.
 
 When the website changes, run `node sync-from-website.mjs` to copy it into all four apps, then rebuild them.
 

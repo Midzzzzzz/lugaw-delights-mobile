@@ -78,6 +78,14 @@ function printReceipt(o){
 s = must(s, `<a href="owner.html">owner dashboard</a>`, `<a href="https://lugawdelights.netlify.app/owner.html" target="_blank" rel="noopener">owner dashboard</a>`, "seller.html");
 write("seller", "index.html", s);
 
+// Kitchen staff use the seller app too: its sign-in page links to the kitchen page,
+// and a device that opened the kitchen page goes straight there next time.
+console.log("Kitchen page (in the seller app)");
+let k = read("kitchen.html");
+k = must(k, `<a href="seller.html" id="toCashier">`, `<a href="index.html" id="toCashier">`, "kitchen.html");
+k = must(k, `\${other==="owner"?"owner.html":"seller.html"}`, `\${other==="owner"?"https://lugawdelights.netlify.app/owner.html":"index.html"}`, "kitchen.html");
+write("seller", "kitchen.html", k);
+
 console.log("Owner app page");
 let o = read("owner.html");
 o = must(o, `  const w=window.open("","_blank");
