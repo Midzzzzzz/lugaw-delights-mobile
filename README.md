@@ -46,3 +46,7 @@ The rider sign-up page offers the Rider app as a download from `lugaw-app/public
 ```
 copy riderndroidppuild\outputspk\debugpp-debug.apk ..\lugaw-app\publicpps\LugawDelightsRider.apk
 ```
+
+## Seller app: Bluetooth printer and cash drawer
+
+`seller/android/app/src/main/java/com/lugawdelights/seller/BtPrinterPlugin.java` is a small Capacitor plugin (registered in `MainActivity.java`) that sends raw ESC/POS bytes to a paired Bluetooth receipt printer over the classic serial profile. The page builds the receipt and the open-drawer command in `escpos.js` (copied from the website by the sync script). `cap sync` doesn't touch these Java files or the Bluetooth permissions in `AndroidManifest.xml`.
