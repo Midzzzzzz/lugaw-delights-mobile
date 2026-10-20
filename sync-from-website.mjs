@@ -88,6 +88,17 @@ k = must(k, `<a href="seller.html" id="toCashier">`, `<a href="index.html" id="t
 k = must(k, `\${other==="owner"?"owner.html":"seller.html"}`, `\${other==="owner"?"https://lugawdelights.netlify.app/owner.html":"index.html"}`, "kitchen.html");
 write("seller", "kitchen.html", k);
 
+// The Kitchen app: just the kitchen page. Cashiers and the owner use their own apps.
+console.log("Kitchen app page");
+write("kitchen", "common.js", appCommon);
+for (const f of ["config.js", "style.css", "logo.jpg", "icon.png"]) fs.copyFileSync(new URL(f, SITE), new URL(`kitchen/www/${f}`, import.meta.url));
+let ka = read("kitchen.html");
+ka = must(ka, `    <p style="font-size:.88rem;margin:0"><a href="seller.html" id="toCashier">Cashier? Sign in on the seller dashboard</a></p>\n`, ``, "kitchen.html");
+ka = must(ka, `$("#toCashier").onclick=`, `if($("#toCashier")) $("#toCashier").onclick=`, "kitchen.html");
+ka = must(ka, `<a href="\${other==="owner"?"owner.html":"seller.html"}">\${other==="owner"?"owner":"seller"} dashboard</a>`,
+  `\${other==="owner"?"Owner":"Seller"} app`, "kitchen.html");
+write("kitchen", "index.html", ka);
+
 console.log("Owner app page");
 let o = read("owner.html");
 o = must(o, `  const w=window.open("","_blank");

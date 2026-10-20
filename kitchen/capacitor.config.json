@@ -1,0 +1,8 @@
+{
+  "appId": "com.lugawdelights.kitchen",
+  "appName": "Lugaw Delights Kitchen",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}
