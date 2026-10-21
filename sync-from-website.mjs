@@ -4,8 +4,10 @@
 import fs from "node:fs";
 
 const SITE = new URL("../lugaw-app/public/", import.meta.url);
-// The shop's website and server (Render). Links that leave the app and the apps' server address use it.
-const WEB = "https://lugaw-delights.onrender.com";
+// The shop's website (links that leave the app) and the server the apps talk to. Both are the same
+// Render service; the apps use the onrender.com name, which works even where new domains are blocked.
+const WEB = "https://lugawdelights.com";
+const API = "https://lugaw-delights.onrender.com/api/index.php";
 const read = f => fs.readFileSync(new URL(f, SITE), "utf8");
 const write = (app, f, s) => { fs.writeFileSync(new URL(`${app}/www/${f}`, import.meta.url), s); console.log(`  ${app}/www/${f}`); };
 const must = (s, a, b, where) => { if (!s.includes(a)) throw new Error(`${where}: can't find "${a.slice(0, 60)}"`); return s.replace(a, b); };
@@ -56,7 +58,7 @@ let c = read("index.html");
 c = must(c, `<a href="rider.html#register">Ride with us</a>`, `<a href="${WEB}/rider.html#register" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
 write("customer", "index.html", c);
 // Every app: the client library (fb/) and the server's full address in config.js
-const appConfig = must(read("config.js"), `apiBase: ""`, `apiBase: "${WEB}/api/index.php"`, "config.js");
+const appConfig = must(read("config.js"), `apiBase: ""`, `apiBase: "${API}"`, "config.js");
 for (const app of ["rider", "customer", "seller", "owner", "kitchen"]) {
   fs.mkdirSync(new URL(`${app}/www/fb/`, import.meta.url), { recursive: true });
   for (const f of fs.readdirSync(new URL("fb/", SITE))) fs.copyFileSync(new URL(`fb/${f}`, SITE), new URL(`${app}/www/fb/${f}`, import.meta.url));

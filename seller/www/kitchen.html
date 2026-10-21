@@ -103,7 +103,7 @@ if(isConfigured) onAuthStateChanged(auth, async u=>{
       try{ if((await getDoc(doc(db,"admins",me.uid))).exists()) other="owner"; }catch(_){}
       try{ if(!other && (await getDoc(doc(db,"sellers",me.uid))).exists()) other="seller"; }catch(_){}
       if(other) return box("This isn't a kitchen account",`<p>This is a${other==="owner"?"n owner":" cashier (seller)"} account. Sign out, then sign in with a kitchen staff account,
-        or use the <a href="${other==="owner"?"https://lugaw-delights.onrender.com/owner.html":"index.html"}">${other==="owner"?"owner":"seller"} dashboard</a>.</p>`);
+        or use the <a href="${other==="owner"?"https://lugawdelights.com/owner.html":"index.html"}">${other==="owner"?"owner":"seller"} dashboard</a>.</p>`);
       return finishForm();
     }
     box(k.status==="pending"?"Application sent":"Account paused", k.status==="pending"
