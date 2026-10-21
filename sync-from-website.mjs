@@ -4,6 +4,8 @@
 import fs from "node:fs";
 
 const SITE = new URL("../lugaw-app/public/", import.meta.url);
+// The shop's website and server (Render). Links that leave the app and the apps' server address use it.
+const WEB = "https://lugaw-delights.onrender.com";
 const read = f => fs.readFileSync(new URL(f, SITE), "utf8");
 const write = (app, f, s) => { fs.writeFileSync(new URL(`${app}/www/${f}`, import.meta.url), s); console.log(`  ${app}/www/${f}`); };
 const must = (s, a, b, where) => { if (!s.includes(a)) throw new Error(`${where}: can't find "${a.slice(0, 60)}"`); return s.replace(a, b); };
@@ -46,13 +48,20 @@ let r = read("rider.html");
 r = must(r, `import { auth, db, isConfigured, SHOP,`, `import { showPanel, auth, db, isConfigured, SHOP,`, "rider.html");
 r = must(r, `  const w=window.open("","_blank"); if(!w) return;
   w.document.open(); w.document.write(agreementHTML(agreement)); w.document.close();`, `  showPanel(agreementHTML(agreement), { asDocument: true });`, "rider.html");
-r = must(r, `<a href="index.html">Order food</a>`, `<a href="https://lugawdelights.netlify.app" target="_blank" rel="noopener">Order food</a>`, "rider.html");
+r = must(r, `<a href="index.html">Order food</a>`, `<a href="${WEB}/" target="_blank" rel="noopener">Order food</a>`, "rider.html");
 write("rider", "index.html", r);
 
 console.log("Customer app page");
 let c = read("index.html");
-c = must(c, `<a href="rider.html#register">Ride with us</a>`, `<a href="https://lugawdelights.netlify.app/rider.html#register" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
+c = must(c, `<a href="rider.html#register">Ride with us</a>`, `<a href="${WEB}/rider.html#register" target="_blank" rel="noopener">Ride with us</a>`, "index.html");
 write("customer", "index.html", c);
+// Every app: the client library (fb/) and the server's full address in config.js
+const appConfig = must(read("config.js"), `apiBase: ""`, `apiBase: "${WEB}/api/index.php"`, "config.js");
+for (const app of ["rider", "customer", "seller", "owner", "kitchen"]) {
+  fs.mkdirSync(new URL(`${app}/www/fb/`, import.meta.url), { recursive: true });
+  for (const f of fs.readdirSync(new URL("fb/", SITE))) fs.copyFileSync(new URL(`fb/${f}`, SITE), new URL(`${app}/www/fb/${f}`, import.meta.url));
+}
+
 // Seller and owner apps: print through Android's print screen (Printer plugin) instead of a browser window
 for (const app of ["seller", "owner"]) {
   write(app, "common.js", appCommon);
@@ -78,7 +87,7 @@ function printReceipt(o){
   p.catch(()=>{});
   return true;
 }`, "seller.html");
-s = must(s, `<a href="owner.html">owner dashboard</a>`, `<a href="https://lugawdelights.netlify.app/owner.html" target="_blank" rel="noopener">owner dashboard</a>`, "seller.html");
+s = must(s, `<a href="owner.html">owner dashboard</a>`, `<a href="${WEB}/owner.html" target="_blank" rel="noopener">owner dashboard</a>`, "seller.html");
 write("seller", "index.html", s);
 
 // Kitchen staff use the seller app too: its sign-in page links to the kitchen page,
@@ -86,7 +95,7 @@ write("seller", "index.html", s);
 console.log("Kitchen page (in the seller app)");
 let k = read("kitchen.html");
 k = must(k, `<a href="seller.html" id="toCashier">`, `<a href="index.html" id="toCashier">`, "kitchen.html");
-k = must(k, `\${other==="owner"?"owner.html":"seller.html"}`, `\${other==="owner"?"https://lugawdelights.netlify.app/owner.html":"index.html"}`, "kitchen.html");
+k = must(k, `\${other==="owner"?"owner.html":"seller.html"}`, `\${other==="owner"?"${WEB}/owner.html":"index.html"}`, "kitchen.html");
 write("seller", "kitchen.html", k);
 
 // The Kitchen app: just the kitchen page. Cashiers and the owner use their own apps.
@@ -110,5 +119,8 @@ o = must(o, `  const w=window.open("","_blank");
   if(!p){ b.textContent="Printing isn't available on this phone"; return; }
   p.catch(()=>{});`, "owner.html");
 write("owner", "index.html", o);
+
+console.log("Server address");
+for (const app of ["rider", "customer", "seller", "owner", "kitchen"]) write(app, "config.js", appConfig);
 
 console.log("Done. Rebuild the apps to include these changes.");
