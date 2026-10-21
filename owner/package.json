@@ -10,6 +10,7 @@
   "dependencies": {
     "@capacitor/android": "^8.5.2",
     "@capacitor/core": "^8.5.2",
+    "@capacitor/local-notifications": "^8.3.1",
     "@capgo/capacitor-printer": "^8.1.4"
   },
   "devDependencies": {
