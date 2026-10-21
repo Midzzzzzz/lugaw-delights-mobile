@@ -59,6 +59,7 @@ c = must(c, `<a href="rider.html#register">Ride with us</a>`, `<a href="${WEB}/r
 write("customer", "index.html", c);
 // Every app: the client library (fb/) and the server's full address in config.js
 const appConfig = must(read("config.js"), `apiBase: ""`, `apiBase: "${API}"`, "config.js");
+fs.copyFileSync(new URL("pay-qr.jpg", SITE), new URL("customer/www/pay-qr.jpg", import.meta.url)); // QR customers pay to
 for (const app of ["rider", "customer", "seller", "owner", "kitchen"]) {
   fs.mkdirSync(new URL(`${app}/www/fb/`, import.meta.url), { recursive: true });
   for (const f of fs.readdirSync(new URL("fb/", SITE))) fs.copyFileSync(new URL(`fb/${f}`, SITE), new URL(`${app}/www/fb/${f}`, import.meta.url));
