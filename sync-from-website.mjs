@@ -90,6 +90,18 @@ function printReceipt(o){
   p.catch(()=>{});
   return true;
 }`, "seller.html");
+s = must(s, `function printRefillPage(rows){
+  const w=window.open("","_blank","width=420,height=640");
+  if(!w) return false; // pop-up blocked
+  w.document.open(); w.document.write(refillPageHTML(rows)); w.document.close();
+  return true;
+}`, `// In the app, the refill list goes to Android's print screen too
+function printRefillPage(rows){
+  const p=${appPrint("`To refill`", "refillPageHTML(rows).split(\"<script>\")[0]+\"</body></html>\"")};
+  if(!p) return false;
+  p.catch(()=>{});
+  return true;
+}`, "seller.html");
 s = must(s, `<a href="owner.html">owner dashboard</a>`, `<a href="${WEB}/owner.html" target="_blank" rel="noopener">owner dashboard</a>`, "seller.html");
 write("seller", "index.html", s);
 
