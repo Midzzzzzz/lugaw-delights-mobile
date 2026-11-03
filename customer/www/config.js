@@ -6,7 +6,7 @@
 // 1) Where the shop's server is. The website uses its own api/ folder (leave apiBase empty);
 //    the Android apps are given the full address when they're built (lugaw-mobile/sync-from-website.mjs).
 export const SERVER = {
-  apiBase: "https://lugaw-delights.onrender.com/api/index.php"
+  apiBase: ""
 };
 
 // 2) Your shop details.
