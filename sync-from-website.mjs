@@ -73,6 +73,8 @@ for (const app of ["seller", "owner"]) {
 fs.copyFileSync(new URL("loyverse.js", SITE), new URL("owner/www/loyverse.js", import.meta.url)); // Loyverse sales import
 fs.copyFileSync(new URL("pastshifts.js", SITE), new URL("owner/www/pastshifts.js", import.meta.url)); // past shifts from the order timeline
 fs.copyFileSync(new URL("escpos.js", SITE), new URL("seller/www/escpos.js", import.meta.url)); // Bluetooth receipt printer + cash drawer
+fs.copyFileSync(new URL("jsqr.js", SITE), new URL("seller/www/jsqr.js", import.meta.url)); // reads staff QR cards with the camera (Attendance)
+fs.copyFileSync(new URL("qrcode.js", SITE), new URL("owner/www/qrcode.js", import.meta.url)); // draws the staff QR cards
 const appPrint = (name, html) => `window.Capacitor?.Plugins?.Printer?.printHtml({ name: ${name}, html: ${html} })`;
 
 console.log("Seller app page");
